@@ -90,8 +90,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
     },
     "active_applications" => {
-      "intercity_sample_app" => {
-        ruby_version: "2.1.2",
+      "shuttle_app" => {
+        ruby_version: "2.0.0-p576",
         domain_names: ["localhost"],
         packages: ["nodejs"],
         rails_env: "staging",
@@ -99,7 +99,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           host: "localhost",
           username: "a",
           password: "b",
-          database: "intercity_sample_app_production"
+          database: "shuttle_production"
         },
         "env_vars" => {
           "SECRET_KEY_BASE" => "5c11bffd8ad6d537fc291c4b4089a42a2f40ee6869d75490eef944196b3b601053a8d9c2f5c29aa8738fa786f5c14dd5a6fab1b5537095c2c5ed3f2567392463"
@@ -120,11 +120,13 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
       chef.add_role "postgresql"
       chef.add_role "rails_passenger"
+      chef.add_role "redis"
+      chef.add_role "elasticsearch"
 
       chef.log_level = :info
 
       if json_payload["active_applications"].size > 0
-        json_payload["active_applications"]["intercity_sample_app"]["database_info"]["adapter"] = "postgresql"
+        json_payload["active_applications"]["shuttle_app"]["database_info"]["adapter"] = "postgresql"
       end
 
       # You may also specify custom JSON attributes:
@@ -145,7 +147,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.log_level = :info
 
       if json_payload["active_applications"].size > 0
-        json_payload["active_applications"]["intercity_sample_app"]["database_info"]["adapter"] = "mysql2"
+        json_payload["active_applications"]["shuttle_app"]["database_info"]["adapter"] = "mysql2"
       end
 
       # You may also specify custom JSON attributes:
