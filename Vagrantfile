@@ -94,10 +94,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         ruby_version: "2.0.0-p576",
         domain_names: ["localhost"],
         packages: ["nodejs"],
-        rails_env: "staging",
+        rails_env: "production",
         "database_info" => {
           host: "localhost",
-          username: "a",
+          username: "shuttle",
           password: "b",
           database: "shuttle_production"
         },
@@ -122,6 +122,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       chef.add_role "rails_passenger"
       chef.add_role "redis"
       chef.add_role "elasticsearch"
+      chef.add_role "shuttle_app"
 
       chef.log_level = :info
 
